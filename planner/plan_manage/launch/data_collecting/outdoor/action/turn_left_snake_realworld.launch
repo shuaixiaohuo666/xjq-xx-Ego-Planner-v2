@@ -1,0 +1,238 @@
+<launch>
+	<arg name="enable_dynamic_obstacle_detection" value="false" />
+
+	<arg name="odom_topic" value="ekf_quat/ekf_odom" />
+	<arg name="cloud_topic" value="cloud_registered"/>
+
+	<arg name="virtual_ceil" value="12.0"/>
+	<arg name="virtual_ground" value="0.5"/>
+	<arg name="flight_type" default="2"/>  <!-- 1:MANUAL_TARGET; 2:PRESET_TARGET -->
+	<arg name="traj_yaw_dot_max_per_sec" value="7.0"/>
+	<arg name="traj_yaw_dot_dot_max_per_sec" value="14.0"/>
+	<arg name="traj_spread_commanded_yaw_over_traj" value="true"/>
+	<arg name="traj_commanded_yaw_dynamic_threshold" value="0.05"/>
+	<arg name="traj_commanded_yaw_init_window_sec" value="0.12"/>
+
+	<!-- mission behaviour -->
+	<arg name="auto_repeat_mission" value="false"/>
+	<arg name="waypoint_hold_velocity_thresh" value="0.15"/>
+	<arg name="gimbal_pitch_reach_thresh_deg" value="5.0"/>
+	<arg name="gimbal_waypoint_reach_thresh_m" value="0.25"/>
+	<arg name="gimbal_action_waypoint_indices" value=""/>
+	<!-- 10-path chained mission total waypoints -->
+	<arg name="point_num" value="20"/>
+
+	<!-- run_in_sim_realworld.xml supports target0..target10 only -->
+	<arg name="target0_x" value="2.552"/>
+	<arg name="target0_y" value="0.741"/>
+	<arg name="target0_z" value="0.882"/>
+	<arg name="target0_yaw" value="-0.976"/>
+	<arg name="target0_cam_pitch" value="0"/>
+
+	<arg name="target1_x" value="2.625"/>
+	<arg name="target1_y" value="0.897"/>
+	<arg name="target1_z" value="0.887"/>
+	<arg name="target1_yaw" value="-0.469"/>
+	<arg name="target1_cam_pitch" value="0"/>
+
+	<arg name="target2_x" value="2.508"/>
+	<arg name="target2_y" value="0.918"/>
+	<arg name="target2_z" value="0.993"/>
+	<arg name="target2_yaw" value="-1.061"/>
+	<arg name="target2_cam_pitch" value="0"/>
+
+	<arg name="target3_x" value="2.606"/>
+	<arg name="target3_y" value="0.933"/>
+	<arg name="target3_z" value="0.876"/>
+	<arg name="target3_yaw" value="-0.486"/>
+	<arg name="target3_cam_pitch" value="0"/>
+
+	<arg name="target4_x" value="2.521"/>
+	<arg name="target4_y" value="0.606"/>
+	<arg name="target4_z" value="0.987"/>
+	<arg name="target4_yaw" value="-0.934"/>
+	<arg name="target4_cam_pitch" value="0"/>
+
+	<arg name="target5_x" value="2.608"/>
+	<arg name="target5_y" value="0.952"/>
+	<arg name="target5_z" value="0.955"/>
+	<arg name="target5_yaw" value="-0.514"/>
+	<arg name="target5_cam_pitch" value="0"/>
+
+	<arg name="target6_x" value="2.536"/>
+	<arg name="target6_y" value="0.698"/>
+	<arg name="target6_z" value="1.071"/>
+	<arg name="target6_yaw" value="-1.053"/>
+	<arg name="target6_cam_pitch" value="0"/>
+
+	<arg name="target7_x" value="2.597"/>
+	<arg name="target7_y" value="1.060"/>
+	<arg name="target7_z" value="0.838"/>
+	<arg name="target7_yaw" value="-0.446"/>
+	<arg name="target7_cam_pitch" value="0"/>
+
+	<arg name="target8_x" value="2.362"/>
+	<arg name="target8_y" value="0.778"/>
+	<arg name="target8_z" value="0.873"/>
+	<arg name="target8_yaw" value="-0.961"/>
+	<arg name="target8_cam_pitch" value="0"/>
+
+	<arg name="target9_x" value="2.672"/>
+	<arg name="target9_y" value="0.842"/>
+	<arg name="target9_z" value="0.989"/>
+	<arg name="target9_yaw" value="-0.478"/>
+	<arg name="target9_cam_pitch" value="0"/>
+
+	<arg name="target10_x" value="2.502"/>
+	<arg name="target10_y" value="0.637"/>
+	<arg name="target10_z" value="0.821"/>
+	<arg name="target10_yaw" value="-0.889"/>
+	<arg name="target10_cam_pitch" value="0"/>
+
+	<!-- Inject waypoint11+ directly to planner fsm namespace -->
+	<param name="/drone_0_ego_planner_node/fsm/waypoint_num" value="20"/>
+	<param name="/drone_0_ego_planner_node/fsm/auto_repeat_mission" value="$(arg auto_repeat_mission)"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint_hold_velocity_thresh" value="$(arg waypoint_hold_velocity_thresh)"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_x" value="2.696"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_y" value="0.816"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_z" value="0.894"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_yaw" value="-0.514"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_x" value="2.679"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_y" value="0.690"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_z" value="0.772"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_yaw" value="-0.835"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_x" value="2.659"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_y" value="0.896"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_z" value="1.053"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_yaw" value="-0.447"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_x" value="2.458"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_y" value="0.709"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_z" value="0.877"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_yaw" value="-1.006"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_x" value="2.550"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_y" value="0.806"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_z" value="0.874"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_yaw" value="-0.469"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_x" value="2.660"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_y" value="0.744"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_z" value="1.000"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_yaw" value="-1.010"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_x" value="2.648"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_y" value="1.030"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_z" value="0.918"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_yaw" value="-0.498"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_x" value="2.418"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_y" value="0.612"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_z" value="0.679"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_yaw" value="-0.929"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_cam_pitch" value="0"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_x" value="2.681"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_y" value="0.969"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_z" value="0.784"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_yaw" value="-0.538"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_cam_pitch" value="0"/>
+
+	<group if="$(arg enable_dynamic_obstacle_detection)">
+		<node pkg="swarm_bridge" name="traj2odom_node" type="traj2odom_node" output="screen">
+			<param name="odom_topic" value="$(arg odom_topic)" />
+		</node>
+
+		<include file="$(find dynamic_obstacle_detection)/launch/dynamic_obstacle_detection_indoor.launch" >
+			<arg name="odom_topic" value="$(arg odom_topic)" />
+			<arg name="cloud_topic" value="$(arg cloud_topic)" />
+		</include>
+	</group>
+
+	<include file="$(find ego_planner)/launch/include/run_in_sim_realworld.xml">
+		<arg name="drone_id" value="0"/>
+		<arg name="odom_topic" value="$(arg odom_topic)"/>
+		<arg name="cloud_topic" value="$(arg cloud_topic)"/>
+		<arg name="max_vel" value="1.0" />
+		<arg name="max_acc" value="20.0" />
+		<arg name="max_jer" value="20.0" />
+		<arg name="planning_horizon" value="20" />
+		<arg name="thresh_replan_time" value="0.5"/>
+		<arg name="traj_yaw_dot_max_per_sec" value="$(arg traj_yaw_dot_max_per_sec)"/>
+		<arg name="traj_yaw_dot_dot_max_per_sec" value="$(arg traj_yaw_dot_dot_max_per_sec)"/>
+		<arg name="traj_spread_commanded_yaw_over_traj" value="$(arg traj_spread_commanded_yaw_over_traj)"/>
+		<arg name="traj_commanded_yaw_dynamic_threshold" value="$(arg traj_commanded_yaw_dynamic_threshold)"/>
+		<arg name="traj_commanded_yaw_init_window_sec" value="$(arg traj_commanded_yaw_init_window_sec)"/>
+		<arg name="local_update_range_x" value="30.0" />
+		<arg name="local_update_range_y" value="30.0" />
+		<arg name="local_update_range_z" value="3.0" />
+		<arg name="obstacles_inflation" value="0.2" />
+		<arg name="flight_type" value="$(arg flight_type)"/>
+
+		<arg name="point_num" value="$(arg point_num)"/>
+		<arg name="target0_x" value="$(arg target0_x)"/>
+		<arg name="target0_y" value="$(arg target0_y)"/>
+		<arg name="target0_z" value="$(arg target0_z)"/>
+		<arg name="target0_yaw" value="$(arg target0_yaw)"/>
+		<arg name="target0_cam_pitch" value="$(arg target0_cam_pitch)"/>
+		<arg name="target1_x" value="$(arg target1_x)"/>
+		<arg name="target1_y" value="$(arg target1_y)"/>
+		<arg name="target1_z" value="$(arg target1_z)"/>
+		<arg name="target1_yaw" value="$(arg target1_yaw)"/>
+		<arg name="target1_cam_pitch" value="$(arg target1_cam_pitch)"/>
+		<arg name="target2_x" value="$(arg target2_x)"/>
+		<arg name="target2_y" value="$(arg target2_y)"/>
+		<arg name="target2_z" value="$(arg target2_z)"/>
+		<arg name="target2_yaw" value="$(arg target2_yaw)"/>
+		<arg name="target2_cam_pitch" value="$(arg target2_cam_pitch)"/>
+		<arg name="target3_x" value="$(arg target3_x)"/>
+		<arg name="target3_y" value="$(arg target3_y)"/>
+		<arg name="target3_z" value="$(arg target3_z)"/>
+		<arg name="target3_yaw" value="$(arg target3_yaw)"/>
+		<arg name="target3_cam_pitch" value="$(arg target3_cam_pitch)"/>
+		<arg name="target4_x" value="$(arg target4_x)"/>
+		<arg name="target4_y" value="$(arg target4_y)"/>
+		<arg name="target4_z" value="$(arg target4_z)"/>
+		<arg name="target4_yaw" value="$(arg target4_yaw)"/>
+		<arg name="target4_cam_pitch" value="$(arg target4_cam_pitch)"/>
+		<arg name="target5_x" value="$(arg target5_x)"/>
+		<arg name="target5_y" value="$(arg target5_y)"/>
+		<arg name="target5_z" value="$(arg target5_z)"/>
+		<arg name="target5_yaw" value="$(arg target5_yaw)"/>
+		<arg name="target5_cam_pitch" value="$(arg target5_cam_pitch)"/>
+		<arg name="target6_x" value="$(arg target6_x)"/>
+		<arg name="target6_y" value="$(arg target6_y)"/>
+		<arg name="target6_z" value="$(arg target6_z)"/>
+		<arg name="target6_yaw" value="$(arg target6_yaw)"/>
+		<arg name="target6_cam_pitch" value="$(arg target6_cam_pitch)"/>
+		<arg name="target7_x" value="$(arg target7_x)"/>
+		<arg name="target7_y" value="$(arg target7_y)"/>
+		<arg name="target7_z" value="$(arg target7_z)"/>
+		<arg name="target7_yaw" value="$(arg target7_yaw)"/>
+		<arg name="target7_cam_pitch" value="$(arg target7_cam_pitch)"/>
+		<arg name="target8_x" value="$(arg target8_x)"/>
+		<arg name="target8_y" value="$(arg target8_y)"/>
+		<arg name="target8_z" value="$(arg target8_z)"/>
+		<arg name="target8_yaw" value="$(arg target8_yaw)"/>
+		<arg name="target8_cam_pitch" value="$(arg target8_cam_pitch)"/>
+		<arg name="target9_x" value="$(arg target9_x)"/>
+		<arg name="target9_y" value="$(arg target9_y)"/>
+		<arg name="target9_z" value="$(arg target9_z)"/>
+		<arg name="target9_yaw" value="$(arg target9_yaw)"/>
+		<arg name="target9_cam_pitch" value="$(arg target9_cam_pitch)"/>
+		<arg name="target10_x" value="$(arg target10_x)"/>
+		<arg name="target10_y" value="$(arg target10_y)"/>
+		<arg name="target10_z" value="$(arg target10_z)"/>
+		<arg name="target10_yaw" value="$(arg target10_yaw)"/>
+		<arg name="target10_cam_pitch" value="$(arg target10_cam_pitch)"/>
+		<arg name="gimbal_action_waypoint_indices" value="$(arg gimbal_action_waypoint_indices)"/>
+		<arg name="gimbal_pitch_reach_thresh_deg" value="$(arg gimbal_pitch_reach_thresh_deg)"/>
+		<arg name="gimbal_waypoint_reach_thresh_m" value="$(arg gimbal_waypoint_reach_thresh_m)"/>
+		<arg name="auto_repeat_mission" value="$(arg auto_repeat_mission)"/>
+		<arg name="waypoint_hold_velocity_thresh" value="$(arg waypoint_hold_velocity_thresh)"/>
+		<arg name="virtual_ceil" value="$(arg virtual_ceil)"/>
+		<arg name="virtual_ground" value="$(arg virtual_ground)"/>
+	</include>
+
+</launch>

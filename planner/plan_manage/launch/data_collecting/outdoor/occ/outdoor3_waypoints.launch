@@ -1,0 +1,194 @@
+    <!-- 云台起始 -->
+    cam_angle_p: -6948
+    cam_angle_r: 15
+    cam_angle_y: 7096
+    mtr_angle_p: 7182
+    mtr_angle_r: -391
+    mtr_angle_y: 8991
+    <!-- 云台结束 -->
+    cam_angle_p: -1692
+    cam_angle_r: -17
+    cam_angle_y: 6810
+    mtr_angle_p: 1910
+    mtr_angle_r: -457
+    mtr_angle_y: 9045
+
+    <!-- Path 1 -->
+    <arg name="point0_x" value="10.468" />
+    <arg name="point0_y" value="3.194" />
+    <arg name="point0_z" value="8.959" />
+    <arg name="point0_yaw" value="-0.501" />
+    <arg name="point1_x" value="10.531" />
+    <arg name="point1_y" value="3.242" />
+    <arg name="point1_z" value="7.294" />
+    <arg name="point1_yaw" value="-0.496" />
+    <arg name="point2_x" value="10.505" />
+    <arg name="point2_y" value="3.169" />
+    <arg name="point2_z" value="4.058" />
+    <arg name="point2_yaw" value="-0.520" />
+    <arg name="point3_x" value="10.434" />
+    <arg name="point3_y" value="3.207" />
+    <arg name="point3_z" value="1.457" />
+    <arg name="point3_yaw" value="-0.479" />
+
+    <!-- Path 2 -->
+    <arg name="point0_x" value="10.530" />
+    <arg name="point0_y" value="3.209" />
+    <arg name="point0_z" value="9.046" />
+    <arg name="point0_yaw" value="-0.496" />
+    <arg name="point1_x" value="10.608" />
+    <arg name="point1_y" value="3.411" />
+    <arg name="point1_z" value="7.241" />
+    <arg name="point1_yaw" value="-0.461" />
+    <arg name="point2_x" value="10.532" />
+    <arg name="point2_y" value="3.116" />
+    <arg name="point2_z" value="4.088" />
+    <arg name="point2_yaw" value="-0.552" />
+    <arg name="point3_x" value="10.423" />
+    <arg name="point3_y" value="3.055" />
+    <arg name="point3_z" value="1.633" />
+    <arg name="point3_yaw" value="-0.455" />
+
+    <!-- Path 3 -->
+    <arg name="point0_x" value="10.585" />
+    <arg name="point0_y" value="3.228" />
+    <arg name="point0_z" value="8.996" />
+    <arg name="point0_yaw" value="-0.559" />
+    <arg name="point1_x" value="10.490" />
+    <arg name="point1_y" value="3.120" />
+    <arg name="point1_z" value="7.140" />
+    <arg name="point1_yaw" value="-0.489" />
+    <arg name="point2_x" value="10.477" />
+    <arg name="point2_y" value="3.045" />
+    <arg name="point2_z" value="3.965" />
+    <arg name="point2_yaw" value="-0.571" />
+    <arg name="point3_x" value="10.517" />
+    <arg name="point3_y" value="3.252" />
+    <arg name="point3_z" value="1.514" />
+    <arg name="point3_yaw" value="-0.530" />
+
+    <!-- Path 4 -->
+    <arg name="point0_x" value="10.612" />
+    <arg name="point0_y" value="3.295" />
+    <arg name="point0_z" value="8.920" />
+    <arg name="point0_yaw" value="-0.529" />
+    <arg name="point1_x" value="10.442" />
+    <arg name="point1_y" value="3.097" />
+    <arg name="point1_z" value="7.171" />
+    <arg name="point1_yaw" value="-0.494" />
+    <arg name="point2_x" value="10.719" />
+    <arg name="point2_y" value="3.083" />
+    <arg name="point2_z" value="4.004" />
+    <arg name="point2_yaw" value="-0.422" />
+    <arg name="point3_x" value="10.508" />
+    <arg name="point3_y" value="3.221" />
+    <arg name="point3_z" value="1.391" />
+    <arg name="point3_yaw" value="-0.534" />
+
+    <!-- Path 5 -->
+    <arg name="point0_x" value="10.491" />
+    <arg name="point0_y" value="3.231" />
+    <arg name="point0_z" value="9.000" />
+    <arg name="point0_yaw" value="-0.474" />
+    <arg name="point1_x" value="10.696" />
+    <arg name="point1_y" value="3.242" />
+    <arg name="point1_z" value="7.259" />
+    <arg name="point1_yaw" value="-0.500" />
+    <arg name="point2_x" value="10.355" />
+    <arg name="point2_y" value="3.177" />
+    <arg name="point2_z" value="4.103" />
+    <arg name="point2_yaw" value="-0.462" />
+    <arg name="point3_x" value="10.446" />
+    <arg name="point3_y" value="3.262" />
+    <arg name="point3_z" value="1.623" />
+    <arg name="point3_yaw" value="-0.503" />
+
+    <!-- Path 6 -->
+    <arg name="point0_x" value="10.525" />
+    <arg name="point0_y" value="3.184" />
+    <arg name="point0_z" value="8.986" />
+    <arg name="point0_yaw" value="-0.541" />
+    <arg name="point1_x" value="10.578" />
+    <arg name="point1_y" value="3.426" />
+    <arg name="point1_z" value="7.232" />
+    <arg name="point1_yaw" value="-0.510" />
+    <arg name="point2_x" value="10.572" />
+    <arg name="point2_y" value="3.156" />
+    <arg name="point2_z" value="4.037" />
+    <arg name="point2_yaw" value="-0.424" />
+    <arg name="point3_x" value="10.283" />
+    <arg name="point3_y" value="3.349" />
+    <arg name="point3_z" value="1.399" />
+    <arg name="point3_yaw" value="-0.468" />
+
+    <!-- Path 7 -->
+    <arg name="point0_x" value="10.395" />
+    <arg name="point0_y" value="3.032" />
+    <arg name="point0_z" value="9.039" />
+    <arg name="point0_yaw" value="-0.532" />
+    <arg name="point1_x" value="10.487" />
+    <arg name="point1_y" value="3.332" />
+    <arg name="point1_z" value="7.233" />
+    <arg name="point1_yaw" value="-0.516" />
+    <arg name="point2_x" value="10.633" />
+    <arg name="point2_y" value="3.062" />
+    <arg name="point2_z" value="4.041" />
+    <arg name="point2_yaw" value="-0.513" />
+    <arg name="point3_x" value="10.356" />
+    <arg name="point3_y" value="3.234" />
+    <arg name="point3_z" value="1.290" />
+    <arg name="point3_yaw" value="-0.489" />
+
+    <!-- Path 8 -->
+    <arg name="point0_x" value="10.404" />
+    <arg name="point0_y" value="3.043" />
+    <arg name="point0_z" value="8.914" />
+    <arg name="point0_yaw" value="-0.609" />
+    <arg name="point1_x" value="10.347" />
+    <arg name="point1_y" value="3.300" />
+    <arg name="point1_z" value="7.139" />
+    <arg name="point1_yaw" value="-0.490" />
+    <arg name="point2_x" value="10.401" />
+    <arg name="point2_y" value="3.241" />
+    <arg name="point2_z" value="4.117" />
+    <arg name="point2_yaw" value="-0.576" />
+    <arg name="point3_x" value="10.461" />
+    <arg name="point3_y" value="3.337" />
+    <arg name="point3_z" value="1.476" />
+    <arg name="point3_yaw" value="-0.429" />
+
+    <!-- Path 9 -->
+    <arg name="point0_x" value="10.342" />
+    <arg name="point0_y" value="3.218" />
+    <arg name="point0_z" value="9.128" />
+    <arg name="point0_yaw" value="-0.373" />
+    <arg name="point1_x" value="10.586" />
+    <arg name="point1_y" value="3.412" />
+    <arg name="point1_z" value="7.265" />
+    <arg name="point1_yaw" value="-0.463" />
+    <arg name="point2_x" value="10.366" />
+    <arg name="point2_y" value="3.150" />
+    <arg name="point2_z" value="4.091" />
+    <arg name="point2_yaw" value="-0.462" />
+    <arg name="point3_x" value="10.324" />
+    <arg name="point3_y" value="3.280" />
+    <arg name="point3_z" value="1.400" />
+    <arg name="point3_yaw" value="-0.453" />
+
+    <!-- Path 10 -->
+    <arg name="point0_x" value="10.548" />
+    <arg name="point0_y" value="3.226" />
+    <arg name="point0_z" value="8.963" />
+    <arg name="point0_yaw" value="-0.475" />
+    <arg name="point1_x" value="10.564" />
+    <arg name="point1_y" value="3.186" />
+    <arg name="point1_z" value="7.150" />
+    <arg name="point1_yaw" value="-0.460" />
+    <arg name="point2_x" value="10.547" />
+    <arg name="point2_y" value="3.098" />
+    <arg name="point2_z" value="3.934" />
+    <arg name="point2_yaw" value="-0.504" />
+    <arg name="point3_x" value="10.357" />
+    <arg name="point3_y" value="3.076" />
+    <arg name="point3_z" value="1.535" />
+    <arg name="point3_yaw" value="-0.453" />

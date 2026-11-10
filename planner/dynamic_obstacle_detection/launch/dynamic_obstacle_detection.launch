@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ============================================ -->
+    <!-- Arguments -->
+    <!-- ============================================ -->
+    <arg name="odom_topic" default="ekf_quat/ekf_odom"/>
+    <arg name="cloud_topic" default="cloud_registered"/>
+    <arg name="debug_mode" default="false"/>
+
+    <!-- ============================================ -->
+    <!-- Obstacle Detection Node -->
+    <!-- ============================================ -->
+    <node pkg="dynamic_obstacle_detection" 
+          type="dynamic_obstacle_detection_node" 
+          name="dynamic_obstacle_detection_node" 
+          output="screen">
+        
+        <!-- ======================================== -->
+        <!-- Common Parameters -->
+        <!-- ======================================== -->
+        
+        <!-- Sphere detection parameters (in world frame, centered on UAV) -->
+        <param name="detection_radius_min" value="0.5" />     <!-- 球形检测最小半径 (米) -->
+        <param name="detection_radius_max" value="40.0" />    <!-- 球形检测最大半径 (米) -->
+        
+        <!-- Region of Interest (ROI) parameters -->
+        <param name="use_roi_filter" value="true" />
+	      <rosparam param="roi_min">[5.0, -4.0, 1.5]</rosparam>    <!-- ROI最小顶点 [x_min, y_min, z_min] [5.0, -2.5, 0.8] -->
+        <rosparam param="roi_max">[40.0, 4.0, 3.5]</rosparam>    <!-- ROI最大顶点 [x_max, y_max, z_max] [35.0, 2.5, 3.0]-->
+        
+        <!-- Prediction parameters -->
+        <param name="enable_prediction" value="true" />          <!-- 是否启用轨迹预测 -->
+        <param name="prediction_horizon" value="3.0" />          <!-- 预测时长 (秒) -->
+        <param name="min_obstacle_speed" value="0.1" />          <!-- 最小障碍物速度阈值 (m/s) -->
+        
+        <!-- ======================================== -->
+        <!-- Advanced Parameters -->
+        <!-- ======================================== -->
+        
+        <!-- Frame IDs -->
+        <param name="world_frame" value="camera_init" />
+        
+        <!-- Additional output topics -->
+        <param name="obstacle_cloud_topic" value="/obstacle_cloud" />
+        <param name="static_cloud_topic" value="/static_cloud" />
+        
+        <!-- Dynamic obstacle filtering parameters -->
+        <param name="is_pub_dyn_obs_filter_pcl" value="false" />  <!-- 是否发布去除动态障碍物后的点云 -->
+        <param name="obstacle_filter_radius" value="0.5" />       <!-- 障碍物过滤半径 (米) -->
+        
+        <!-- Obstacle aggregation method: "mean", "median", "centroid", "all" -->
+        <param name="aggregation_method" value="all" />
+        
+        <!-- Trajectory parameters -->
+        <param name="max_trajectory_length" value="500" />       <!-- 最大轨迹点数 -->
+        <param name="trajectory_sample_distance" value="0.1" />  <!-- 轨迹采样距离 (米) -->
+        
+        <!-- Prediction advanced parameters -->
+        <param name="prediction_samples" value="5" />           <!-- 预测轨迹采样点数 -->
+        <param name="velocity_window_size" value="10" />         <!-- 速度估计窗口大小 -->
+        
+        <!-- ======================================== -->
+        <!-- Topic Remapping -->
+        <!-- ======================================== -->
+        
+        <!-- Input topics -->
+        <remap from="~cloud_topic" to="$(arg cloud_topic)" />
+        <remap from="~odom_topic" to="$(arg odom_topic)" />
+        
+        <!-- Output topics -->
+        <remap from="/predicted_obstacle_traj" to="/broadcast_traj_to_planner"/>
+        
+        <!-- ======================================== -->
+        <!-- Debug Mode Configuration -->
+        <!-- ======================================== -->
+
+        <param name="debug_mode" value="false" />
+        <param name="filtered_cloud_topic" value="/filtered_cloud" />
+        <!-- Debug topics (only published when debug_mode=true): 
+             /filtered_cloud, /uav_trajectory, /obstacle_trajectory -->
+        
+    </node>
+
+</launch>

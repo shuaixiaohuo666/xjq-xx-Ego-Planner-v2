@@ -1,0 +1,15 @@
+planner.zip
+.vscode/
+opt.txt
+planner/plan_manage/replay_bags/
+Zhou 等 - 2020 - EGO-Planner An ESDF-free Gradient-based Local Planner for Quadrotors.pdf
+
+# Generated files and editor backups
+__pycache__/
+*.pyc
+*~
+*.log
+/build/
+/devel/
+/install/
+/logs/

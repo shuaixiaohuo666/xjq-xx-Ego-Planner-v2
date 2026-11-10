@@ -1,0 +1,21 @@
+    <!-- 云台起点 -->
+    cam_angle_p: 4358
+    cam_angle_r: -3
+    cam_angle_y: 6757
+    mtr_angle_p: -3364
+    mtr_angle_r: -40
+    mtr_angle_y: 9024
+
+    <!-- 云台回正 -->
+    cam_angle_p: 857
+    cam_angle_r: 15
+    cam_angle_y: 6796
+    mtr_angle_p: -234
+    mtr_angle_r: 50
+    mtr_angle_y: 9004
+
+    <!-- pose -->
+    x: 2.23
+    y: 0.0
+    z: 1.20
+    yaw: 0.0

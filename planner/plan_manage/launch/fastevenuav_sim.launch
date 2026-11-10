@@ -1,0 +1,91 @@
+<launch>
+	<arg name="map_size_x" value="220.0"/>
+	<arg name="map_size_y" value="80.0"/>
+    <arg name="map_size_z" value=" 3.0"/>
+    <arg name="odom_topic" value="visual_slam/odom" />
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ego_planner)/launch/include/single_drone_moving_obs.rviz" required="true" />
+
+	<!-- 订阅所有广播的轨迹，并将其转换为 Odometry 消息，方便在 RViz 中可视化其他无人机或动态障碍物的预测路径。 -->
+	<node pkg="swarm_bridge" name="traj2odom_node" type="traj2odom_node" output="screen">
+      <param name="odom_topic" value="$(arg odom_topic)" />
+    </node>
+	
+	<include file="$(find dynamic_obstacle_detection)/launch/dynamic_obstacle_detection.launch" >
+		<arg name="odom_topic" value="$(arg odom_topic)" />
+    	<!-- <arg name="cloud_topic" value="$(arg cloud_topic)" /> -->
+	</include>
+	
+    <!-- map -->
+	<!-- <node pkg ="map_generator" name ="random_forest" type ="random_forest" output = "screen">
+		<param name="map/x_size" value="80" />
+		<param name="map/y_size" value="20" />
+		<param name="map/z_size" value="3" />
+		<param name="map/resolution" value="0.1"/>
+		<param name="ObstacleShape/seed" value="1"/>
+		<param name="map/obs_num" value="150"/>
+		<param name="ObstacleShape/lower_rad" value="0.5"/>
+		<param name="ObstacleShape/upper_rad" value="0.7"/>
+		<param name="ObstacleShape/lower_hei" value="0.0"/>
+		<param name="ObstacleShape/upper_hei" value="3.0"/>
+		<param name="map/circle_num" value="0"/>
+		<param name="ObstacleShape/radius_l" value="0.7"/>
+		<param name="ObstacleShape/radius_h" value="0.5"/>
+		<param name="ObstacleShape/z_l" value="0.7"/>
+		<param name="ObstacleShape/z_h" value="0.8"/>
+		<param name="ObstacleShape/theta" value="0.5"/>
+		<param name="pub_rate" value="0.5"/>
+		<param name="min_distance" value="0.8"/>
+
+		<param name="whether_remove_specific_obs" value="true"/>
+		<param name="x_lower" value="-50.0"/>
+		<param name="y_lower" value="-30.0"/>
+		<param name="x_upper" value="20.0"/>
+		<param name="y_upper" value="30.0"/>
+	</node> -->
+
+	<arg name="init_x" value="0.0"/>
+	<arg name="init_y" value="0.0"/>
+	<arg name="init_z" value="1.5"/>
+	<arg name="target0_x" value="100.0"/>
+	<arg name="target0_y" value="0.0"/>
+	<arg name="target0_z" value="1.5"/>
+	<!-- <arg name="target1_x" value="50.0"/>
+	<arg name="target1_y" value="5.0"/>
+	<arg name="target1_z" value="1.5"/>
+	<arg name="target2_x" value="0.5"/>
+	<arg name="target2_y" value="0.5"/>
+	<arg name="target2_z" value="1.5"/> -->
+    <include file="$(find ego_planner)/launch/include/run_in_sim.xml">
+        <arg name="drone_id" value="0"/>
+        <arg name="init_x" value="$(arg init_x)"/>
+        <arg name="init_y" value="$(arg init_y)"/>
+        <arg name="init_z" value="$(arg init_z)"/>
+        <arg name="map_size_x" value="$(arg map_size_x)"/>
+        <arg name="map_size_y" value="$(arg map_size_y)"/>
+        <arg name="map_size_z" value="$(arg map_size_z)"/>
+        <arg name="odom_topic" value="$(arg odom_topic)"/>
+		<arg name="max_vel" value="15.0" />
+		<arg name="max_acc" value="20.0" />
+		<arg name="max_jer" value="20.0" />
+		<arg name="planning_horizon" value="20" />
+		<arg name="thresh_replan_time" value="0.5"/>
+		<arg name="local_update_range_x" value="30.0" />
+    	<arg name="local_update_range_y" value="30.0" />
+    	<arg name="local_update_range_z" value="3.0" />
+        <arg name="flight_type" value="2"/>    <!-- 1:MANUAL_TARGET; 2:PRESET_TARGET -->
+
+		<arg name="point_num" value="1"/>
+		<arg name="target0_x" value="$(arg target0_x)"/>
+		<arg name="target0_y" value="$(arg target0_y)"/>
+		<arg name="target0_z" value="$(arg target0_z)"/>
+		<!-- <arg name="target1_x" value="$(arg target1_x)"/>
+		<arg name="target1_y" value="$(arg target1_y)"/>
+		<arg name="target1_z" value="$(arg target1_z)"/>
+		<arg name="target2_x" value="$(arg target2_x)"/>
+		<arg name="target2_y" value="$(arg target2_y)"/>
+		<arg name="target2_z" value="$(arg target2_z)"/> -->
+    </include>
+
+</launch>
+

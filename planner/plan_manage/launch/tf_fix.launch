@@ -1,0 +1,28 @@
+<!-- 坐标系 (Frame)
+
+    LIO:
+        camera_init	世界坐标系/地图坐标系 (World / Map Frame)。算法启动时，机器人（IMU）的初始位置被定义为该坐标系的原点。
+        body	    机器人本体坐标系，特指IMU坐标系。	移动坐标系
+
+    PX4:
+        map         一个世界固定的全局坐标系。它的存在是为了消除odom坐标系的累积误差。
+        odom        一个世界固定的里程计坐标系。odom坐标系是无人机运动的起点。
+        base_link   机体坐标系。
+
+ -->
+<launch>
+    <node pkg="tf" type="static_transform_publisher" name="map_to_camera_init_link"
+            args="0 0 0 0 0 0 /map /camera_init 10" />
+    
+    <node pkg="tf" type="static_transform_publisher" name="map_to_odom_link"
+            args="0 0 0 0 0 0 /map /odom 10" />
+    
+    <node pkg="tf" type="static_transform_publisher" name="body_to_base_link"
+            args="0 -0.013 -0.07 0 0 0 /body /base_link 10" />
+
+    <node pkg="tf" type="static_transform_publisher" name="world_to_map"
+            args="0 0 0 0 0 0 /world /map 10" />
+
+</launch>
+
+    

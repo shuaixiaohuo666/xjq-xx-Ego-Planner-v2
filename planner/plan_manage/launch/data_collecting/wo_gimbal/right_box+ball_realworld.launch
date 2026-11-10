@@ -1,0 +1,468 @@
+<launch>
+	<arg name="enable_dynamic_obstacle_detection" value="false" />
+
+	<arg name="odom_topic" value="ekf_quat/ekf_odom" />
+	<arg name="cloud_topic" value="cloud_registered"/>
+
+	<arg name="virtual_ceil" value="3.0"/>
+	<arg name="virtual_ground" value="0.5"/>
+	<arg name="flight_type" default="2"/>  <!-- 1:MANUAL_TARGET; 2:PRESET_TARGET -->
+	<arg name="traj_yaw_dot_max_per_sec" value="7.0"/>
+	<arg name="traj_yaw_dot_dot_max_per_sec" value="14.0"/>
+	<arg name="traj_spread_commanded_yaw_over_traj" value="true"/>
+	<arg name="traj_commanded_yaw_dynamic_threshold" value="0.05"/>
+	<arg name="traj_commanded_yaw_init_window_sec" value="0.12"/>
+
+	<!-- 10-path chained mission total waypoints -->
+	<arg name="point_num" value="86"/>
+
+	<!-- run_in_sim_realworld.xml supports target0..target10 only -->
+	<arg name="target0_x" value="0.057"/>
+	<arg name="target0_y" value="-0.500"/>
+	<arg name="target0_z" value="1.048"/>
+	<arg name="target0_yaw" value="0.394"/>
+
+	<arg name="target1_x" value="0.663"/>
+	<arg name="target1_y" value="-1.237"/>
+	<arg name="target1_z" value="1.135"/>
+	<arg name="target1_yaw" value="0.600"/>
+
+	<arg name="target2_x" value="2.041"/>
+	<arg name="target2_y" value="-1.702"/>
+	<arg name="target2_z" value="1.087"/>
+	<arg name="target2_yaw" value="1.066"/>
+
+	<arg name="target3_x" value="2.867"/>
+	<arg name="target3_y" value="-1.640"/>
+	<arg name="target3_z" value="1.082"/>
+	<arg name="target3_yaw" value="1.334"/>
+
+	<arg name="target4_x" value="3.546"/>
+	<arg name="target4_y" value="-1.491"/>
+	<arg name="target4_z" value="1.086"/>
+	<arg name="target4_yaw" value="1.630"/>
+
+	<arg name="target5_x" value="4.148"/>
+	<arg name="target5_y" value="-1.245"/>
+	<arg name="target5_z" value="1.079"/>
+	<arg name="target5_yaw" value="1.952"/>
+
+	<arg name="target6_x" value="4.642"/>
+	<arg name="target6_y" value="-0.728"/>
+	<arg name="target6_z" value="1.063"/>
+	<arg name="target6_yaw" value="2.288"/>
+
+	<arg name="target7_x" value="4.895"/>
+	<arg name="target7_y" value="-0.249"/>
+	<arg name="target7_z" value="1.069"/>
+	<arg name="target7_yaw" value="2.648"/>
+
+	<arg name="target8_x" value="4.921"/>
+	<arg name="target8_y" value="0.250"/>
+	<arg name="target8_z" value="0.998"/>
+	<arg name="target8_yaw" value="-3.141593"/>
+	<arg name="target8_cam_pitch" value="-4500"/>
+
+	<arg name="target9_x" value="-0.003"/>
+	<arg name="target9_y" value="-0.569"/>
+	<arg name="target9_z" value="1.074"/>
+	<arg name="target9_yaw" value="0.355"/>
+
+	<arg name="target10_x" value="0.512"/>
+	<arg name="target10_y" value="-1.281"/>
+	<arg name="target10_z" value="1.025"/>
+	<arg name="target10_yaw" value="0.644"/>
+
+	<!-- Inject waypoint11+ directly to planner fsm namespace -->
+	<param name="/drone_0_ego_planner_node/fsm/waypoint_num" value="86"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_x" value="1.845"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_y" value="-1.772"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_z" value="1.110"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint11_yaw" value="1.062"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_x" value="2.820"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_y" value="-1.343"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_z" value="1.180"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint12_yaw" value="1.311"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_x" value="3.674"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_y" value="-1.600"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_z" value="1.139"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint13_yaw" value="1.577"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_x" value="4.177"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_y" value="-1.378"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_z" value="1.114"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint14_yaw" value="1.923"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_x" value="4.653"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_y" value="-0.531"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_z" value="1.080"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint15_yaw" value="2.417"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_x" value="4.981"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_y" value="-0.058"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_z" value="1.230"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint16_yaw" value="2.737"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_x" value="5.052"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_y" value="0.157"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_z" value="1.037"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint17_yaw" value="-2.996"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_x" value="0.586"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_y" value="-1.354"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_z" value="1.207"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint18_yaw" value="0.545"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_x" value="1.927"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_y" value="-1.525"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_z" value="0.909"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint19_yaw" value="1.102"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint20_x" value="2.904"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint20_y" value="-1.486"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint20_z" value="1.246"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint20_yaw" value="1.300"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint21_x" value="3.580"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint21_y" value="-1.577"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint21_z" value="0.958"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint21_yaw" value="1.583"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint22_x" value="4.132"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint22_y" value="-1.409"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint22_z" value="1.123"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint22_yaw" value="1.901"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint23_x" value="4.637"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint23_y" value="-0.911"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint23_z" value="1.158"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint23_yaw" value="2.291"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint24_x" value="4.926"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint24_y" value="-0.369"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint24_z" value="0.978"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint24_yaw" value="2.626"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint25_x" value="4.912"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint25_y" value="0.097"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint25_z" value="1.004"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint25_yaw" value="-3.024"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint26_x" value="0.084"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint26_y" value="-0.439"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint26_z" value="0.977"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint26_yaw" value="0.300"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint27_x" value="0.721"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint27_y" value="-1.031"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint27_z" value="1.236"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint27_yaw" value="0.614"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint28_x" value="2.156"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint28_y" value="-1.546"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint28_z" value="0.988"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint28_yaw" value="1.087"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint29_x" value="2.904"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint29_y" value="-1.660"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint29_z" value="1.094"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint29_yaw" value="1.318"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint30_x" value="3.574"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint30_y" value="-1.520"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint30_z" value="1.140"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint30_yaw" value="1.625"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint31_x" value="4.033"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint31_y" value="-1.135"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint31_z" value="1.007"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint31_yaw" value="1.967"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint32_x" value="4.537"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint32_y" value="-0.619"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint32_z" value="1.088"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint32_yaw" value="2.195"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint33_x" value="5.042"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint33_y" value="-0.332"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint33_z" value="1.123"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint33_yaw" value="2.694"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint34_x" value="4.889"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint34_y" value="0.327"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint34_z" value="1.076"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint34_yaw" value="-3.045"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint35_x" value="-0.036"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint35_y" value="-0.540"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint35_z" value="0.967"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint35_yaw" value="0.400"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint36_x" value="0.513"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint36_y" value="-1.358"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint36_z" value="1.160"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint36_yaw" value="0.602"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint37_x" value="2.027"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint37_y" value="-1.665"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint37_z" value="1.016"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint37_yaw" value="1.016"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint38_x" value="2.840"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint38_y" value="-1.747"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint38_z" value="1.083"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint38_yaw" value="1.265"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint39_x" value="3.714"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint39_y" value="-1.608"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint39_z" value="1.055"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint39_yaw" value="1.701"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint40_x" value="4.119"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint40_y" value="-1.324"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint40_z" value="1.110"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint40_yaw" value="1.999"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint41_x" value="4.544"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint41_y" value="-0.977"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint41_z" value="1.003"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint41_yaw" value="2.272"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint42_x" value="4.844"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint42_y" value="-0.497"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint42_z" value="1.251"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint42_yaw" value="-3.041593"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint43_x" value="0.114"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint43_y" value="-0.418"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint43_z" value="1.180"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint43_yaw" value="0.352"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint44_x" value="0.717"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint44_y" value="-1.158"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint44_z" value="0.914"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint44_yaw" value="0.587"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint45_x" value="2.143"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint45_y" value="-1.641"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint45_z" value="1.259"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint45_yaw" value="1.073"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint46_x" value="2.765"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint46_y" value="-1.551"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint46_z" value="1.062"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint46_yaw" value="1.361"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint47_x" value="3.652"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint47_y" value="-1.609"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint47_z" value="1.072"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint47_yaw" value="1.575"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint48_x" value="4.220"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint48_y" value="-1.424"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint48_z" value="1.055"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint48_yaw" value="2.010"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint49_x" value="4.724"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint49_y" value="-0.675"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint49_z" value="0.991"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint49_yaw" value="2.253"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint50_x" value="4.744"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint50_y" value="-0.357"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint50_z" value="1.142"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint50_yaw" value="2.696"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint51_x" value="4.924"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint51_y" value="0.174"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint51_z" value="0.959"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint51_yaw" value="-3.046"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint52_x" value="0.011"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint52_y" value="-0.525"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint52_z" value="0.992"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint52_yaw" value="0.367"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint53_x" value="0.615"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint53_y" value="-1.232"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint53_z" value="1.177"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint53_yaw" value="0.603"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint54_x" value="2.022"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint54_y" value="-1.683"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint54_z" value="1.145"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint54_yaw" value="1.012"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint55_x" value="3.498"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint55_y" value="-1.473"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint55_z" value="1.008"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint55_yaw" value="1.613"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint56_x" value="4.134"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint56_y" value="-1.203"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint56_z" value="0.979"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint56_yaw" value="2.005"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint57_x" value="4.561"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint57_y" value="-0.678"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint57_z" value="0.947"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint57_yaw" value="2.358"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint58_x" value="4.959"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint58_y" value="-0.257"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint58_z" value="1.085"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint58_yaw" value="2.706"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint59_x" value="4.799"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint59_y" value="0.258"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint59_z" value="0.984"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint59_yaw" value="-2.983"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint60_x" value="-0.026"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint60_y" value="-0.569"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint60_z" value="1.129"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint60_yaw" value="0.398"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint61_x" value="0.607"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint61_y" value="-1.257"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint61_z" value="1.130"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint61_yaw" value="0.573"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint62_x" value="2.108"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint62_y" value="-1.749"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint62_z" value="1.099"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint62_yaw" value="1.139"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint63_x" value="2.984"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint63_y" value="-1.616"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint63_z" value="1.072"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint63_yaw" value="1.352"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint64_x" value="4.029"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint64_y" value="-1.131"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint64_z" value="1.062"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint64_yaw" value="2.059"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint65_x" value="4.580"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint65_y" value="-0.633"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint65_z" value="1.160"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint65_yaw" value="2.292"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint66_x" value="5.063"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint66_y" value="0.020"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint66_z" value="1.152"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint66_yaw" value="2.631"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint67_x" value="4.770"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint67_y" value="0.220"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint67_z" value="0.976"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint67_yaw" value="-3.030"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint68_x" value="0.144"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint68_y" value="-0.422"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint68_z" value="1.035"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint68_yaw" value="0.516"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint69_x" value="0.622"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint69_y" value="-1.248"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint69_z" value="1.225"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint69_yaw" value="0.646"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint70_x" value="2.152"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint70_y" value="-1.754"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint70_z" value="1.241"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint70_yaw" value="1.141"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint71_x" value="2.837"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint71_y" value="-1.638"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint71_z" value="1.049"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint71_yaw" value="1.331"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint72_x" value="3.510"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint72_y" value="-1.476"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint72_z" value="1.126"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint72_yaw" value="1.589"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint73_x" value="4.059"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint73_y" value="-1.403"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint73_z" value="1.058"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint73_yaw" value="1.895"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint74_x" value="4.596"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint74_y" value="-0.566"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint74_z" value="1.011"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint74_yaw" value="2.247"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint75_x" value="4.670"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint75_y" value="-0.246"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint75_z" value="1.104"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint75_yaw" value="2.747"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint76_x" value="5.096"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint76_y" value="0.323"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint76_z" value="0.980"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint76_yaw" value="-3.095"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint77_x" value="0.134"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint77_y" value="-0.297"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint77_z" value="0.982"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint77_yaw" value="0.366"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint78_x" value="0.658"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint78_y" value="-1.162"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint78_z" value="1.300"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint78_yaw" value="0.513"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint79_x" value="2.156"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint79_y" value="-1.819"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint79_z" value="1.067"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint79_yaw" value="1.015"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint80_x" value="2.907"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint80_y" value="-1.538"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint80_z" value="0.901"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint80_yaw" value="1.385"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint81_x" value="3.610"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint81_y" value="-1.433"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint81_z" value="1.161"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint81_yaw" value="1.648"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint82_x" value="4.129"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint82_y" value="-1.230"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint82_z" value="0.988"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint82_yaw" value="1.940"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint83_x" value="4.728"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint83_y" value="-0.609"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint83_z" value="1.171"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint83_yaw" value="2.247"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint84_x" value="4.648"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint84_y" value="-0.252"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint84_z" value="1.146"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint84_yaw" value="2.665"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint85_x" value="5.015"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint85_y" value="0.071"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint85_z" value="0.924"/>
+	<param name="/drone_0_ego_planner_node/fsm/waypoint85_yaw" value="-3.029"/>
+
+	<arg name="gimbal_action_waypoint_indices" value="8"/>
+	<arg name="gimbal_pitch_reach_thresh_deg" value="2.0"/>
+	<arg name="gimbal_waypoint_reach_thresh_m" value="0.25"/>
+
+	<group if="$(arg enable_dynamic_obstacle_detection)">
+		<node pkg="swarm_bridge" name="traj2odom_node" type="traj2odom_node" output="screen">
+			<param name="odom_topic" value="$(arg odom_topic)" />
+		</node>
+
+		<include file="$(find dynamic_obstacle_detection)/launch/dynamic_obstacle_detection_indoor.launch" >
+			<arg name="odom_topic" value="$(arg odom_topic)" />
+			<arg name="cloud_topic" value="$(arg cloud_topic)" />
+		</include>
+	</group>
+
+	<include file="$(find ego_planner)/launch/include/run_in_sim_realworld.xml">
+		<arg name="drone_id" value="0"/>
+		<arg name="odom_topic" value="$(arg odom_topic)"/>
+		<arg name="cloud_topic" value="$(arg cloud_topic)"/>
+		<arg name="max_vel" value="0.7" />
+		<arg name="max_acc" value="20.0" />
+		<arg name="max_jer" value="20.0" />
+		<arg name="planning_horizon" value="20" />
+		<arg name="thresh_replan_time" value="0.5"/>
+		<arg name="traj_yaw_dot_max_per_sec" value="$(arg traj_yaw_dot_max_per_sec)"/>
+		<arg name="traj_yaw_dot_dot_max_per_sec" value="$(arg traj_yaw_dot_dot_max_per_sec)"/>
+		<arg name="traj_spread_commanded_yaw_over_traj" value="$(arg traj_spread_commanded_yaw_over_traj)"/>
+		<arg name="traj_commanded_yaw_dynamic_threshold" value="$(arg traj_commanded_yaw_dynamic_threshold)"/>
+		<arg name="traj_commanded_yaw_init_window_sec" value="$(arg traj_commanded_yaw_init_window_sec)"/>
+		<arg name="local_update_range_x" value="30.0" />
+		<arg name="local_update_range_y" value="30.0" />
+		<arg name="local_update_range_z" value="3.0" />
+		<arg name="obstacles_inflation" value="0.2" />
+		<arg name="flight_type" value="$(arg flight_type)"/>
+
+		<arg name="point_num" value="$(arg point_num)"/>
+		<arg name="target0_x" value="$(arg target0_x)"/>
+		<arg name="target0_y" value="$(arg target0_y)"/>
+		<arg name="target0_z" value="$(arg target0_z)"/>
+		<arg name="target0_yaw" value="$(arg target0_yaw)"/>
+		<arg name="target1_x" value="$(arg target1_x)"/>
+		<arg name="target1_y" value="$(arg target1_y)"/>
+		<arg name="target1_z" value="$(arg target1_z)"/>
+		<arg name="target1_yaw" value="$(arg target1_yaw)"/>
+		<arg name="target2_x" value="$(arg target2_x)"/>
+		<arg name="target2_y" value="$(arg target2_y)"/>
+		<arg name="target2_z" value="$(arg target2_z)"/>
+		<arg name="target2_yaw" value="$(arg target2_yaw)"/>
+		<arg name="target3_x" value="$(arg target3_x)"/>
+		<arg name="target3_y" value="$(arg target3_y)"/>
+		<arg name="target3_z" value="$(arg target3_z)"/>
+		<arg name="target3_yaw" value="$(arg target3_yaw)"/>
+		<arg name="target4_x" value="$(arg target4_x)"/>
+		<arg name="target4_y" value="$(arg target4_y)"/>
+		<arg name="target4_z" value="$(arg target4_z)"/>
+		<arg name="target4_yaw" value="$(arg target4_yaw)"/>
+		<arg name="target5_x" value="$(arg target5_x)"/>
+		<arg name="target5_y" value="$(arg target5_y)"/>
+		<arg name="target5_z" value="$(arg target5_z)"/>
+		<arg name="target5_yaw" value="$(arg target5_yaw)"/>
+		<arg name="target6_x" value="$(arg target6_x)"/>
+		<arg name="target6_y" value="$(arg target6_y)"/>
+		<arg name="target6_z" value="$(arg target6_z)"/>
+		<arg name="target6_yaw" value="$(arg target6_yaw)"/>
+		<arg name="target7_x" value="$(arg target7_x)"/>
+		<arg name="target7_y" value="$(arg target7_y)"/>
+		<arg name="target7_z" value="$(arg target7_z)"/>
+		<arg name="target7_yaw" value="$(arg target7_yaw)"/>
+		<arg name="target8_x" value="$(arg target8_x)"/>
+		<arg name="target8_y" value="$(arg target8_y)"/>
+		<arg name="target8_z" value="$(arg target8_z)"/>
+		<arg name="target8_yaw" value="$(arg target8_yaw)"/>
+		<arg name="target8_cam_pitch" value="$(arg target8_cam_pitch)"/>
+		<arg name="target9_x" value="$(arg target9_x)"/>
+		<arg name="target9_y" value="$(arg target9_y)"/>
+		<arg name="target9_z" value="$(arg target9_z)"/>
+		<arg name="target9_yaw" value="$(arg target9_yaw)"/>
+		<arg name="target10_x" value="$(arg target10_x)"/>
+		<arg name="target10_y" value="$(arg target10_y)"/>
+		<arg name="target10_z" value="$(arg target10_z)"/>
+		<arg name="target10_yaw" value="$(arg target10_yaw)"/>
+
+		<arg name="gimbal_action_waypoint_indices" value="$(arg gimbal_action_waypoint_indices)"/>
+		<arg name="gimbal_pitch_reach_thresh_deg" value="$(arg gimbal_pitch_reach_thresh_deg)"/>
+		<arg name="gimbal_waypoint_reach_thresh_m" value="$(arg gimbal_waypoint_reach_thresh_m)"/>
+		<arg name="virtual_ceil" value="$(arg virtual_ceil)"/>
+		<arg name="virtual_ground" value="$(arg virtual_ground)"/>
+	</include>
+
+</launch>
